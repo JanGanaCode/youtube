@@ -7,16 +7,16 @@ export class AmplifyStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const amplifyAppName = "test App";
+    const amplifyAppName = "My React app";
 
     const amplifyApp = new App(this, amplifyAppName, {
       environmentVariables: {
-        AMPLIFY_MONOREPO_APP_ROOT: "react-aws-cdk/frontend",
+        AMPLIFY_MONOREPO_APP_ROOT: "react-aws-deployment/frontend",
       },
       sourceCodeProvider: new GitHubSourceCodeProvider({
         owner: "janganacode",
         repository: "youtube",
-        oauthToken: SecretValue.secretsManager("github-token"),
+        oauthToken: SecretValue.secretsManager("YOUR_GITHUB_TOKEN"),
       }),
       buildSpec: BuildSpec.fromObjectToYaml({
         version: "1.0",
@@ -39,11 +39,11 @@ export class AmplifyStack extends Stack {
                 paths: ["node_modules/**/*"],
               },
             },
-            appRoot: "react-aws-cdk/frontend",
+            appRoot: "react-aws-deployment/frontend",
           },
         ],
       }),
     });
-    const mainBranch = amplifyApp.addBranch("react-aws-cdk");
+    const mainBranch = amplifyApp.addBranch("react-aws-deployment");
   }
 }
